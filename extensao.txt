@@ -14,6 +14,15 @@ coisas que preciso aprender:
 
 aprendendo para fazer:
 
+tudo que tem em manifest:
+https://developer.chrome.com/docs/extensions/reference/manifest?hl=pt-br
+
+tem que ter ícone para poder upar
+
+contente scripts servem para ler e modificar conteúdo da página
+
+matches contém todos os sites onde o script vai ser injetado
+
 
 
 
