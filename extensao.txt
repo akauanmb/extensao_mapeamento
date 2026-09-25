@@ -1,0 +1,27 @@
+Ideia:
+mapear todos os campos interagíveis por clique em um site e mapeá-los com atalhos
+
+como fazer:
+-deve percorrer o hmtl da página em busca dessas tags interagíveis
+-entrar em um modo onde teclas/seqeuncia de teclas vão ativar essas tags
+
+coisas que preciso aprender:
+-tudo que preciso para escrever um manifest
+-todas as tags interagíveis de um html
+-como listar todas elas
+-como fazer a extensão criar atalhos de acordo com a quantidade de tags interagíveis
+-fazer com que todas sejam mapeadas na tela
+
+aprendendo para fazer:
+
+
+
+
+tags interagíveis:
+-<link>
+-<nav>
+-<butons>
+-<details>
+-<dialog>
+-<summary>
+-<a>

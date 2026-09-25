@@ -1,0 +1,24 @@
+{
+"manifest_version": 1,
+"name": "extensão_mapeamento_atalhos",
+"version_name" : 0.1,
+"description": "Serve para mapear todos os itens interagíveis dentro de uma página, facilitando o uso do teclado apenas",
+"permission":["scripting"],
+"host_permissions": "<all_urls>",
+"background":{
+        "service_worker": "idkfile"
+
+
+},
+
+"content_scripts":{  
+        "matches": ,
+        "js": ,
+        "run_at": ,
+        "world": ,
+        "css": ,
+},
+
+
+
+}
