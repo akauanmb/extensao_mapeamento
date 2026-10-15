@@ -1,30 +1,18 @@
 Ideia:
 mapear todos os campos interagíveis por clique em um site e mapeá-los com atalhos
 
+
+
+
 como fazer:
 -deve percorrer o hmtl da página em busca dessas tags interagíveis
--entrar em um modo onde teclas/seqeuncia de teclas vão ativar essas tags
-
-coisas que preciso aprender:
--tudo que preciso para escrever um manifest
--todas as tags interagíveis de um html
--como listar todas elas
--como fazer a extensão criar atalhos de acordo com a quantidade de tags interagíveis
--fazer com que todas sejam mapeadas na tela
-
-aprendendo para fazer:
-
-tudo que tem em manifest:
-https://developer.chrome.com/docs/extensions/reference/manifest?hl=pt-br
-
-tem que ter ícone para poder upar
-
-contente scripts servem para ler e modificar conteúdo da página
-
-matches contém todos os sites onde o script vai ser injetado
-
-
-
+-entrar em um modo onde teclas/seqeuncia de teclas vão ativar essas tags (all_urls + activeTab com um script?)
+--------------------
+-função que irá buscar todos os elementos(com algum regex acredito eu??)
+-checar se o mapeamento dos botões já foi feito, caso já utiliza ele
+-função para fazer uma lista com todos esses elementos e atribui teclas para cada uma delas (ver se será preciso criar um modo ligado)
+-função para o identificador em css para mostrar que tecla funciona pra cada botão
+-fim
 
 tags interagíveis:
 -<link>
@@ -34,3 +22,93 @@ tags interagíveis:
 -<dialog>
 -<summary>
 -<a>
+
+
+coisas que preciso aprender:
+-todas as tags interagíveis de um html
+-como listar todas ela
+	-posso tentar puxar do DOM?
+-como fazer a extensão criar atalhos de acordo com a quantidade de tags interagíveis
+-fazer com que todas sejam mapeadas na tela
+-css inserido ao lado delas com o valor de cada atalho
+-aprender melhor sobre DOM(teoria e prática)
+---------------------------------------------------------------------------------------
+CONTINUAÇÃO!(MOSTRAR COMO A IDEIA EVOLUI COM EU APRENDENDO MAIS)
+puxando elementos da página
+-DOM API 
+	-cloneNode() função para duplicar
+-document.querySelector
+-document.querySelectorAll
+
+permissões da extensão
+-activeTab
+
+criando o estado onde os atalhos estarão ativos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aprendendo para fazer:
+
+-tudo que tem em manifest:
+https://developer.chrome.com/docs/extensions/reference/manifest?hl=pt-br
+
+-active tab
+https://developer.chrome.com/docs/extensions/develop/concepts/activeTab?hl=pt-br
+
+-tem que ter ícone para poder upar
+
+-contente scripts servem para ler e modificar conteúdo da página
+
+-matches contém todos os sites onde o script vai ser injetado
+
+-ocument representa a estrutura interna da página web carregada e faz parte da janela 
+
+- ... funciona como um desempacotador
+
+-insertAdjacentElement(posição, novoElemento)
+^^^^^provavelmente utilizado para inserir o campo informando a letra
+
+-precisa usar acento grave pra utilizar template literal
+
+-atribuindo atalho = 
+"commands":{
+ "_execute_action":{
+  "sugested_key":{
+   "default": "Ctrl+B",
+   "mac": "Command+B"
+}
+}
+}
+A tecla "_execute_action" executa o mesmo código do evento action.onClicked(). Portanto, não é necessário adicionar mais código.
+
+-Só preciso injetar script na página ativa, não preciso processar nenhum evento
+
+-Expressão deFunção invocado imediatamente: coloca () no final para que seja executada assim que ler a função assim não precisa chamar ela
+
