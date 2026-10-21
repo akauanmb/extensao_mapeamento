@@ -3,18 +3,18 @@
     "name": "eu te amo microsoft",
     "version": "1.0",
     "description": "mapeia todos os clicáveis da página e mapeia teclas, ou combinações de teclas, para acioná-los",
-    "permssions": [
-        "activeTab"
+
+    "permissions": [
+        "activeTab", "scripting"
     ],
-    "content_scripts":[
+
+    "background":
         {
-            "matches": ["<all_urls>"],
-            "css": ["cards.css"],
-            "js": ["content_script.js"]
-        }
-    ],
+            "service_worker": "background.js"
+        },
+
     "commands": {
-        "_execute_shortpaths":{
+        "execute_shortpath":{
             "suggested_key":{
                 "default": "Ctrl+A"
             }

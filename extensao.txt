@@ -44,26 +44,13 @@ permissões da extensão
 -activeTab
 
 criando o estado onde os atalhos estarão ativos
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-----------------------------------------------------------------------------------------
+FAZENDO DE FATO
+-Precisei adicionar um service_worker e utilizar chrome.scripting
+-não precisei declarar o script pq vou usar o service worker pra injetar ele( executeScript() )
+-precisei utilizar um listener para saber quando o comando seria ativado ()
+   -essa foi a conclusão do "modo ativo". Ao invés de o script ser injetado automaticamente o service worker executa o script assim que percebe o comando.
+-aparentemente preciso identificar a tab para injetar o script
 
 
 
