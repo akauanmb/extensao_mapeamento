@@ -16,8 +16,9 @@
     "commands": {
         "execute_shortpath":{
             "suggested_key":{
-                "default": "Ctrl+A"
-            }
+                "default": "Alt+A"
+            },
+            "description": "mapeia todos os clicáveis da página e mapeia teclas, ou combinações de teclas, para acioná-los"
         }
     }
 }
