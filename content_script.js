@@ -7,9 +7,14 @@ const elementos = document.querySelectorAll("[tabindex], a, nav, link, button, d
 
 const mapaAtalhos = {};
 
+const cliqueMouse = new MouseEvent("click", {bubbles: true, cancelable: true});
+
 elementos.forEach((elemento, index) => {
     //recebe valor do índice e converte para string
     //elementos[index] receberá a letra valor a+indice
+    if(elemento.offsetHeight===0 || elemento.offsetWidth===0){
+        return;
+    }
     let resto = index % 26;
     let letraAtalho = String.fromCharCode(resto + 97);
     const textoAtalho = [letraAtalho];
@@ -34,27 +39,32 @@ elementos.forEach((elemento, index) => {
     
     //após os primerios testes foi notada a necessidade de eventualmente remover todos os cards da tela
     cardVisual.classList.add("removivel");
-    mapaAtalhos[card] = elemento;
 });
 
 function limparCards(){
-    const cards = querySelectorAll('.removivel');
+    const cards = document.querySelectorAll('.removivel');
 
     cards.forEach(card => {
-        card.remove;
-    }
+        card.remove();
+    }); 
 }
 
 let teclasInseridas = "";
 document.addEventListener("keydown", (event) =>{
-    if(document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") return;
+    if(document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA"){
+        limparCards();
+        return;
+    } 
     if(event.key == "Escape"){
         teclasInseridas = "";
+        limparCards();
         return;
     } 
     teclasInseridas = teclasInseridas + event.key;
     if(mapaAtalhos[teclasInseridas]){
-        mapaAtalhos[teclasInseridas].click();
+        //mapaAtalhos[teclasInseridas].click(); foi a primeira tentativa
+        mapaAtalhos[teclasInseridas].dispatchEvent(cliqueMouse);
         teclasInseridas = "";
+        limparCards();
     }
 }); 

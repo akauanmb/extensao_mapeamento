@@ -99,3 +99,8 @@ A tecla "_execute_action" executa o mesmo código do evento action.onClicked(). 
 
 -Expressão deFunção invocado imediatamente: coloca () no final para que seja executada assim que ler a função assim não precisa chamar ela
 
+PROBLEMAS:
+-muitos elementos ocultos também eram apontados, isso foi resolvido com a condicional para largura e altura
+-clique não funcionavam, 
+-os cards não sumiam
+-só funcionava uma vez
