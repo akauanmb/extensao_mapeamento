@@ -2,12 +2,24 @@
 //acho que pra adicionar os cards vai ter que ser um appendchild?
 //também acho que vou precisar de algum algoritmo para atribuir um atalho diferente para cada interagível
 
+if(!window.atalhosInjetados){
 
 const elementos = document.querySelectorAll("[tabindex], a, nav, link, button, details,dialog, summary");
 
 const mapaAtalhos = {};
 
-const cliqueMouse = new MouseEvent("click", {bubbles: true, cancelable: true});
+
+
+function cliqueMouse(elemento){
+//aparentemente precisa focar o elemento pois alguns sites atualmente fazer isso por questão de segurança
+    elemento.focus();
+
+    elemento.dispatchEvent(new MouseEvent("mousedown", {bubbles:true, cancelable:true, view:window}));
+    elemento.dispatchEvent(new MouseEvent("mouseup", {bubbles:true, cancelable:true, view:window}));
+    elemento.dispatchEvent(new MouseEvent("click", {bubbles:true, cancelable:true, view:window}));
+
+    elemento.click();
+}
 
 elementos.forEach((elemento, index) => {
     //recebe valor do índice e converte para string
@@ -29,6 +41,7 @@ elementos.forEach((elemento, index) => {
     const cardVisual = document.createElement("span");
     cardVisual.textContent = card;
     elemento.after(cardVisual);
+    mapaAtalhos[card] = elemento;
 
     cardVisual.style.backgroundColor = "yellow";
     cardVisual.style.color = "black";
@@ -63,8 +76,10 @@ document.addEventListener("keydown", (event) =>{
     teclasInseridas = teclasInseridas + event.key;
     if(mapaAtalhos[teclasInseridas]){
         //mapaAtalhos[teclasInseridas].click(); foi a primeira tentativa
-        mapaAtalhos[teclasInseridas].dispatchEvent(cliqueMouse);
+        //mapaAtalhos[teclasInseridas].dispatchEvent(cliqueMouse); segunda tentativa
+        cliqueMouse(mapaAtalhos[teclasInseridas]);
         teclasInseridas = "";
         limparCards();
     }
 }); 
+}

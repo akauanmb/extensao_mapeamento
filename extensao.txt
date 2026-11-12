@@ -103,4 +103,4 @@ PROBLEMAS:
 -muitos elementos ocultos também eram apontados, isso foi resolvido com a condicional para largura e altura
 -clique não funcionavam, 
 -os cards não sumiam
--só funcionava uma vez
+-só funcionava uma vez (acontecia pq ao injetar o content.script ele tentava criar a variável novamentes)
