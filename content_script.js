@@ -4,82 +4,102 @@
 
 if(!window.atalhosInjetados){
 
-const elementos = document.querySelectorAll("[tabindex], a, nav, link, button, details,dialog, summary");
-
-const mapaAtalhos = {};
-
-
-
-function cliqueMouse(elemento){
-//aparentemente precisa focar o elemento pois alguns sites atualmente fazer isso por questão de segurança
-    elemento.focus();
-
-    elemento.dispatchEvent(new MouseEvent("mousedown", {bubbles:true, cancelable:true, view:window}));
-    elemento.dispatchEvent(new MouseEvent("mouseup", {bubbles:true, cancelable:true, view:window}));
-    elemento.dispatchEvent(new MouseEvent("click", {bubbles:true, cancelable:true, view:window}));
-
-    elemento.click();
-}
-
-elementos.forEach((elemento, index) => {
-    //recebe valor do índice e converte para string
-    //elementos[index] receberá a letra valor a+indice
-    if(elemento.offsetHeight===0 || elemento.offsetWidth===0){
-        return;
-    }
-    let resto = index % 26;
-    let letraAtalho = String.fromCharCode(resto + 97);
-    const textoAtalho = [letraAtalho];
-    while(Math.floor(index/26)>=1){
-        index = Math.floor(index/26) - 1;
-        resto = index % 26;
-        letraAtalho = String.fromCharCode(resto + 97);
-        textoAtalho.unshift(letraAtalho);
-    }
-
-    const card = textoAtalho.join("");
-    const cardVisual = document.createElement("span");
-    cardVisual.textContent = card;
-    elemento.after(cardVisual);
-    mapaAtalhos[card] = elemento;
-
-    cardVisual.style.backgroundColor = "yellow";
-    cardVisual.style.color = "black";
-    cardVisual.style.border = "1px solid black";
-    cardVisual.style.borderRadius = "3px";
-    cardVisual.style.padding = "2px 4px";
-    cardVisual.style.position = "absolute"; // Para flutuar sobre a tela
     
-    //após os primerios testes foi notada a necessidade de eventualmente remover todos os cards da tela
-    cardVisual.classList.add("removivel");
-});
 
-function limparCards(){
-    const cards = document.querySelectorAll('.removivel');
+    const elementos = document.querySelectorAll("[tabindex], a, nav, link, button, details,dialog, summary");
 
-    cards.forEach(card => {
-        card.remove();
-    }); 
-}
+    const mapaAtalhos = {};
 
-let teclasInseridas = "";
-document.addEventListener("keydown", (event) =>{
-    if(document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA"){
-        limparCards();
-        return;
-    } 
-    if(event.key == "Escape"){
-        teclasInseridas = "";
-        limparCards();
-        return;
-    } 
-    teclasInseridas = teclasInseridas + event.key;
-    if(mapaAtalhos[teclasInseridas]){
-        //mapaAtalhos[teclasInseridas].click(); foi a primeira tentativa
-        //mapaAtalhos[teclasInseridas].dispatchEvent(cliqueMouse); segunda tentativa
-        cliqueMouse(mapaAtalhos[teclasInseridas]);
-        teclasInseridas = "";
-        limparCards();
+    const posiCards = [];
+
+    function estaColidindo(rectA, rectB){
+        return !(rectA.left>=rectB.right || rectB.left>=rectA.right || rectA.bottom <= rectB.top || rectB.bottom <= rectA.top);
     }
-}); 
+
+    function cliqueMouse(elemento){
+    //aparentemente precisa focar o elemento pois alguns sites atualmente fazer isso por questão de segurança
+        elemento.focus();
+
+        elemento.dispatchEvent(new MouseEvent("mousedown", {bubbles:true, cancelable:true, view:window}));
+        elemento.dispatchEvent(new MouseEvent("mouseup", {bubbles:true, cancelable:true, view:window}));
+        elemento.dispatchEvent(new MouseEvent("click", {bubbles:true, cancelable:true, view:window}));
+
+        elemento.click();
+    }
+
+    elementos.forEach((elemento, index) => {
+        //recebe valor do índice e converte para string
+        //elementos[index] receberá a letra valor a+indice
+        if(elemento.offsetHeight===0 || elemento.offsetWidth===0){
+            return;
+        }
+        let resto = index % 26;
+        let letraAtalho = String.fromCharCode(resto + 97);
+        const textoAtalho = [letraAtalho];
+        while(Math.floor(index/26)>=1){
+            index = Math.floor(index/26) - 1;
+            resto = index % 26;
+            letraAtalho = String.fromCharCode(resto + 97);
+            textoAtalho.unshift(letraAtalho);
+        }
+
+        const card = textoAtalho.join("");
+        const cardVisual = document.createElement("span");
+        cardVisual.textContent = card;
+        elemento.after(cardVisual);
+        mapaAtalhos[card] = elemento;
+
+        cardVisual.style.backgroundColor = "yellow";
+        cardVisual.style.color = "black";
+        cardVisual.style.border = "1px solid black";
+        cardVisual.style.borderRadius = "3px";
+        cardVisual.style.padding = "2px 4px";
+        cardVisual.style.position = "absolute"; // Para flutuar sobre a tela
+
+        let rectAtual = cardVisual.getBoundingClientRect()
+        let colidiu = posiCards.some(rectExistente => estaColidindo(rectAtual, rectExistente));
+
+        let deslocamento = 0;
+        while(colidiu){
+            deslocamento += 5;
+            cardVisual.style.transform = `translateY(${deslocamento}px)`;
+            rectAtual = cardVisual.getBoundingClientRect()
+            colidiu = posiCards.some(rectExistente => estaColidindo(rectAtual, rectExistente));
+        }
+
+
+        //após os primerios testes foi notada a necessidade de eventualmente remover todos os cards da tela
+        cardVisual.classList.add("removivel");
+        posiCards.push(rectAtual);
+
+    });
+
+    function limparCards(){
+        const cards = document.querySelectorAll('.removivel');
+
+        cards.forEach(card => {
+            card.remove();
+        }); 
+    }
+
+    let teclasInseridas = "";
+    document.addEventListener("keydown", (event) =>{
+        if(document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA"){
+            limparCards();
+            return;
+        } 
+        if(event.key == "Escape"){
+            teclasInseridas = "";
+            limparCards();
+            return;
+        } 
+        teclasInseridas = teclasInseridas + event.key;
+        if(mapaAtalhos[teclasInseridas]){
+            //mapaAtalhos[teclasInseridas].click(); foi a primeira tentativa
+            //mapaAtalhos[teclasInseridas].dispatchEvent(cliqueMouse); segunda tentativa
+            cliqueMouse(mapaAtalhos[teclasInseridas]);
+            teclasInseridas = "";
+            limparCards();
+        }
+    }); 
 }

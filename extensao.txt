@@ -99,10 +99,19 @@ A tecla "_execute_action" executa o mesmo código do evento action.onClicked(). 
 
 -Expressão deFunção invocado imediatamente: coloca () no final para que seja executada assim que ler a função assim não precisa chamar ela
 
+
+
 PROBLEMAS:
--muitos elementos ocultos também eram apontados, isso foi resolvido com a condicional para largura e altura
--clique não funcionavam, 
--os cards não sumiam
+-muitos elementos ocultos também eram apontados (isso foi resolvido com a condicional para largura e altura)
+
+
+-clique não funcionavam (acredito que foi uma junção de erros básicos com a interpretação dos cliques pelos sites, não me recordo qual foi a 
+alteração final que fiz, mas antes disso havia feito toda uma função para simular o maior fielmente o clique de um mouse pois aparentemente sites modernos
+ consideram vários parâmetros, acredito que isso seja por conta da capacidade de arrastar itens e etc)
+
+-os cards não sumiam (adicionei a função de limpar cards)
+
 -só funcionava uma vez (acontecia pq ao injetar o content.script ele tentava criar a variável novamentes)
--cards sobrepostos
--
+
+-cards sobrepostos (tive que criar uma função para checar se existe algum card colidindo e se sim abaixar o mais novo até ele não estar encostando, 
+o problema que acredito que vou ter agr são cards empilhados)
